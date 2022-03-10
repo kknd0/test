@@ -6,6 +6,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: docker-build
+      - name: docker-up
         run: |
-          docker-compose up
+          docker-compose up -d
