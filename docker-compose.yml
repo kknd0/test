@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: 'always'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: apsu
+      MONGO_INITDB_ROOT_PASSWORD: yangpaopao
+    ports:
+      - "27017:27017"
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
+    restart: 'always'
+    environment:
+    - ELASTIC_PASSWORD=yangpaopao
+    volumes:
+    - ./es/ca.crt:/usr/share/elasticsearch/config/certs/http_ca.crt
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server --requirepass yangpaopao
+    restart: 'always'
+    ports:
+      - "6379:6379"
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    restart: 'always'
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/dynamic-security.json:/mosquitto/auth/dynamic-security.json
+    
+
+    
+  
